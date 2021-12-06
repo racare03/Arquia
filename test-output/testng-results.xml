@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results ignored="5" total="6" passed="1" failed="0" skipped="0">
+  <reporter-output>
+  </reporter-output>
+  <suite started-at="2021-11-24T11:58:02 CET" name="Default suite" finished-at="2021-11-24T11:58:19 CET" duration-ms="16514">
+    <groups>
+    </groups>
+    <test started-at="2021-11-24T11:58:02 CET" name="Default test" finished-at="2021-11-24T11:58:19 CET" duration-ms="16514">
+      <class name="tests.Solicitudes">
+        <test-method is-config="true" signature="beforeSuite()[pri:0, instance:tests.Solicitudes@17497425]" started-at="2021-11-24T11:58:02 CET" name="beforeSuite" finished-at="2021-11-24T11:58:02 CET" duration-ms="14" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeSuite -->
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:tests.Solicitudes@17497425]" started-at="2021-11-24T11:58:02 CET" name="beforeMethod" finished-at="2021-11-24T11:58:13 CET" duration-ms="10819" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method signature="swipeTutorials()[pri:0, instance:tests.Solicitudes@17497425]" started-at="2021-11-24T11:58:13 CET" name="swipeTutorials" description="Deslizar tutoriales" finished-at="2021-11-24T11:58:18 CET" duration-ms="4958" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- swipeTutorials -->
+        <test-method is-config="true" signature="afterMethod()[pri:0, instance:tests.Solicitudes@17497425]" started-at="2021-11-24T11:58:18 CET" name="afterMethod" finished-at="2021-11-24T11:58:19 CET" duration-ms="700" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethod -->
+      </class> <!-- tests.Solicitudes -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>

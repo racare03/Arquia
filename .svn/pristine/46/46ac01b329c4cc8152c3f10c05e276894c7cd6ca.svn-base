@@ -1,0 +1,26 @@
+package pages;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import io.appium.java_client.MobileElement;
+import io.appium.java_client.android.AndroidDriver;
+
+public class TutorialesPage {
+	
+	AndroidDriver<MobileElement> driver;
+	
+	By saltar = By.id("es.redsys.smm.arq.inte:id/boton_tutorial_saltar");
+	
+	public TutorialesPage(AndroidDriver<MobileElement> driver) {
+		this.driver = driver;
+	}
+	
+	public void saltar() {
+		WebDriverWait wait = new WebDriverWait(driver, 10);
+		wait.until(ExpectedConditions.elementToBeClickable(saltar));
+		driver.findElement(saltar).click();
+	}
+
+}

@@ -1,0 +1,202 @@
+package tests;
+
+import org.testng.annotations.Test;
+
+
+import io.appium.java_client.MobileElement;
+import io.appium.java_client.android.AndroidDriver;
+import pages.ConfirmacionPage;
+import pages.FormularioPage;
+import pages.HomePage;
+import pages.IdiomaPage;
+import pages.LoginPage;
+import pages.ResultadoPage;
+import pages.TutorialesPage;
+
+import org.testng.annotations.BeforeMethod;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeSuite;
+
+public class Solicitudes {
+	
+	DesiredCapabilities cap = new DesiredCapabilities();
+	AndroidDriver<MobileElement> driver;
+	
+	IdiomaPage idioma;
+	TutorialesPage tutoriales;
+	LoginPage login;
+	HomePage home;
+	FormularioPage formulario;
+	ConfirmacionPage confirmacion;
+	ResultadoPage resultado;
+	
+	
+	@BeforeSuite
+	public void beforeSuite() {
+		cap.setCapability("deviceName", "Huawei Pruebas");
+		cap.setCapability("udid", "6PQ0217401010045");
+		cap.setCapability("platformName", "Android");
+		cap.setCapability("platformVersion", "7.0");
+				
+		cap.setCapability("appPackage", "es.redsys.smm.arq.inte");
+		cap.setCapability("appActivity", "com.redsys.walletmb.vistas.splash.SplashActivity");
+		
+	}
+	
+	@BeforeMethod
+	public void beforeMethod() {
+		
+		try {
+			driver = new AndroidDriver<MobileElement>(new URL("http://127.0.0.1:4723/wd/hub"), cap);
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		idioma = new IdiomaPage(driver);
+	}
+	
+	@Test(description = "Solicitud simple a un usuario registrado")
+	public void solicitudSimpleRegistrado() {
+		idioma.elegirIdioma();
+		idioma.continuar();
+		tutoriales = new TutorialesPage(driver);
+		tutoriales.saltar();
+		login = new LoginPage(driver);
+		login.iniciarSesion("31830007P","31830007P");
+		login.permitir();
+		home = new HomePage(driver);
+		home.Solicitar();
+		home.selectReceptor();
+		formulario = new FormularioPage(driver);
+		formulario.selectImporte("1");
+		formulario.continuarSolicitud();
+		confirmacion = new ConfirmacionPage(driver);
+		confirmacion.finalizar();
+		resultado = new ResultadoPage(driver);
+		Assert.assertEquals("Tu Bizum se ha solicitado correctamente. La solicitud ya ha llegado al destinatario. Esta solicitud caducará pasados 7 días.", resultado.getTextoResultado());
+	}
+	
+	@Test(description = "Solicitud simple a un usuario NO registrado")
+	public void solicitudSimpleNoRegistrado() {
+		idioma.elegirIdioma();
+		idioma.continuar();
+		tutoriales = new TutorialesPage(driver);
+		tutoriales.saltar();
+		login = new LoginPage(driver);
+		login.iniciarSesion("31830007P","31830007P");
+		login.permitir();
+		home = new HomePage(driver);
+		home.Solicitar();
+		home.noMostrarMas();
+		home.selectReceptorNoReg();
+		formulario = new FormularioPage(driver);
+		formulario.selectImporte("1");
+		formulario.continuarSolicitud();
+		confirmacion = new ConfirmacionPage(driver);
+		confirmacion.finalizar();
+		resultado = new ResultadoPage(driver);
+		Assert.assertEquals("Tu invitación ha sido enviada correctamente. Esta solicitud caducará pasados 7 días.",resultado.getTextoResultado());
+		
+	}
+	
+	@Test(description = "Solicitud múltiple a usuarios registrados")
+	public void solicitudMultipleReg() {
+		idioma.elegirIdioma();
+		idioma.continuar();
+		tutoriales = new TutorialesPage(driver);
+		tutoriales.saltar();
+		login = new LoginPage(driver);
+		login.iniciarSesion("31830007P","31830007P");
+		login.permitir();
+		home = new HomePage(driver);
+		home.Solicitar();
+		home.noMostrarMas();
+		home.selectMultiple();
+		home.selectUsuariosReg();
+		home.selectSeguir(957, 1500);
+		formulario = new FormularioPage(driver);
+		formulario.selectImporte("1");
+		formulario.continuarSolicitud();
+		confirmacion = new ConfirmacionPage(driver);
+		confirmacion.finalizar();
+		resultado = new ResultadoPage(driver);
+		Assert.assertEquals("Tu Bizum se ha solicitado correctamente.\n La solicitud ya ha llegado a los usuarios registrados. Esta solicitud caducará pasados 7 días.", resultado.getTextoResultado());
+		
+	}
+	
+	@Test(description = "Solicitud múltiple a usuarios NO registrados")
+	public void solicitudMultipleNoReg() {
+		idioma.elegirIdioma();
+		idioma.continuar();
+		tutoriales = new TutorialesPage(driver);
+		tutoriales.saltar();
+		login = new LoginPage(driver);
+		login.iniciarSesion("31830007P","31830007P");
+		login.permitir();
+		home = new HomePage(driver);
+		home.Solicitar();
+		home.noMostrarMas();
+		home.selectMultiple();
+		home.selectReceptoresNoReg();
+		home.selectSeguir(957, 1500);
+		formulario = new FormularioPage(driver);
+		formulario.selectImporte("1");
+		formulario.continuarSolicitud();
+		confirmacion = new ConfirmacionPage(driver);
+		confirmacion.finalizar();
+		resultado = new ResultadoPage(driver);
+		Assert.assertEquals("Tus invitaciones han sido enviadas correctamente. Esta solicitud caducará pasados 7 días.", resultado.getTextoResultado());
+			
+	}
+	
+	@Test(description = "Solicitud múltiple Mixta")
+	public void solicitudMixta() {
+		idioma.elegirIdioma();
+		idioma.continuar();
+		tutoriales = new TutorialesPage(driver);
+		tutoriales.saltar();
+		login = new LoginPage(driver);
+		login.iniciarSesion("31830007P","31830007P");
+		login.permitir();
+		home = new HomePage(driver);
+		home.Solicitar();
+		home.noMostrarMas();
+		home.selectMultiple();
+		home.selectUsuariosReg();
+		home.selectReceptoresNoReg();
+		home.selectSeguir(957, 1500);
+		formulario = new FormularioPage(driver);
+		formulario.selectImporte("1");
+		formulario.continuarSolicitud();
+		confirmacion = new ConfirmacionPage(driver);
+		confirmacion.finalizar();
+		resultado = new ResultadoPage(driver);
+		Assert.assertEquals("Tu Bizum se ha solicitado correctamente.\n La solicitud ya ha llegado a los usuarios registrados y la invitación ha sido enviada a los que están sin registrar. Esta solicitud caducará pasados 7 días.", resultado.getTextoResultado());
+		
+	}
+	
+	@Test(description = "Deslizar tutoriales")
+	public void swipeTutorials() {
+		idioma.elegirIdioma();
+		idioma.continuar();
+		tutoriales = new TutorialesPage(driver);
+		tutoriales.scroll();
+	}
+	
+	
+
+	@AfterMethod
+	public void afterMethod() {
+		driver.quit();
+	}
+
+	
+
+}
